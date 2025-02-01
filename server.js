@@ -1,9 +1,9 @@
-const express = require('express'); // Import Express
-const app = express(); // Create an instance of Express
-const port = 3000; // Define the port
+const express = require('express'); 
+const app = express(); 
+const port = 3000; 
 
 app.get('/ping', (req, res) => {
-  res.send('Pong!'); 
+  res.send('Welcome to my weird Taste World!'); 
 });
 
 app.listen(port, () => {
