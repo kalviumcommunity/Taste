@@ -57,6 +57,9 @@ Cloudinary (for storing images of food combinations)git remote add origin https:
 
 GitHub link => https://github.com/kalviumcommunity/Taste
 
+
+## ASAP-iNITIALIZE WITH README
+
 PULL REQUEST:
 -------------
 
@@ -151,5 +154,60 @@ Actions taken on feedback:
 nothing(feedback is good)
 if there is no action taken give NA
 
+<<<<<<< HEAD
+
+## ASAP-SET UP DEV ENVIRONMENT
+
+open already created folder for asap (ASAP TASTETWIST NEW DEMO)
+
+cd Taste
+
+git checkout -b dev
+
+npm init
+
+npm init -y
+
+npm i express
+
+
+create .gitigonre file and add these 2
+
+node_modules/
+package-lock.json
+
+
+git add package.json
+
+git commit -m "Added package.json file"
+
+
+git add .gitignore
+
+git commit -m "added .gitigonre file"
+
+git push origin dev
+
+## ASAP Project - Endpoint
+
+open already created folder for asap (ASAP TASTETWIST NEW DEMO)
+
+- cd Taste
+
+- git checkout -b endpoint
+
+create server.js
+
+- git add server.js
+
+- git commit -m "added server.js"
+
+- git add .gitignore
+
+- git commit -m "added .gitignore file"
+
+- git push origin endpoint
+=======
 ## Deployment Link:
 ## https://asap-taste-twist.onrender.com/ping
+>>>>>>> e4609ed1ceb4a9e7c34142686f1561bfd2a63bf9
