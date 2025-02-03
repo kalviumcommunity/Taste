@@ -154,6 +154,7 @@ Actions taken on feedback:
 nothing(feedback is good)
 if there is no action taken give NA
 
+<<<<<<< HEAD
 
 ## ASAP-SET UP DEV ENVIRONMENT
 
@@ -206,3 +207,7 @@ create server.js
 - git commit -m "added .gitignore file"
 
 - git push origin endpoint
+=======
+## Deployment Link:
+## https://asap-taste-twist.onrender.com/ping
+>>>>>>> e4609ed1ceb4a9e7c34142686f1561bfd2a63bf9
