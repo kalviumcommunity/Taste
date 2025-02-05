@@ -1,9 +1,17 @@
-const express = require('express'); 
-const app = express(); 
-const port = 3000; 
+const express = require("express");
+const app = express();
+const port = 3000;
+const connectDatabase = require("./Database");
 
-app.get('/ping', (req, res) => {
-  res.send('Welcome to my weird Taste World!'); 
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({ path: ".env" });
+}
+connectDatabase();
+
+app.use(express.json());
+
+app.get("/ping", (req, res) => {
+  res.send("Welcome to my weird Taste World!");
 });
 
 app.listen(port, () => {
