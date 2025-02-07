@@ -210,3 +210,13 @@ create server.js
 ## Deployment Link:
 ## https://asap-taste-twist.onrender.com/ping
 
+
+## Assignment | ASAP Project - MongoDB client
+## branch name (mongodbclient)
+## Task 
+- Create a Branch Locally
+- Add the MongoDB client code (connection with your server.js)- (Don't forget to add MongoDB connection link in .env)
+- Add the database connection status to the home route (the home page should respond with the database connection status)
+- Commit the changes and Push the branch to github
+
+
