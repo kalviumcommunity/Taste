@@ -11,7 +11,7 @@ const connectDatabase = () => {
     })
     .catch((err) => {
       console.error(`Database connection failed: ${err.message}`);
-      process.exit(1); // Exit if connection fails
+      process.exit(1); 
     });
 };
 
@@ -20,3 +20,17 @@ const getDatabaseStatus = () => {
 };
 
 module.exports = { connectDatabase, getDatabaseStatus };
+
+
+// mongoose.connection.readyState:
+
+// This checks the current connection state to the MongoDB database.
+// The readyState property can have different values based on the connection status:
+// 0: disconnected
+// 1: connected
+// 2: connecting
+// 3: disconnecting
+// === 1:
+
+// This compares the readyState to 1, which represents a connected state.
+
