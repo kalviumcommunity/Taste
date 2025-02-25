@@ -7,10 +7,14 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
+<<<<<<< HEAD
     "preview": "vite preview",
     "build": "tailwindcss -i ./src/index.css -o ./dist/output.css --minify"
 
   
+=======
+    "preview": "vite preview"
+>>>>>>> ff657ee6b558ac80d609539eed56c103e2e069c7
   },
   "dependencies": {
     "react": "^19.0.0",
