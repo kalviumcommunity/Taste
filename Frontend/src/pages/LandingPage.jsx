@@ -1,6 +1,35 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom';
 
 const LandingPage = () => {
+  const navigate=useNavigate();
+  const foodCombos = [
+    {
+      name: "Fries + Ice Cream",
+      image: "fries_icecream",
+      ingredients: ["French Fries", "Vanilla Ice Cream"],
+      description: "A surprising mix of salty and sweet that melts in your mouth!",
+      votes: 120,
+      submittedBy: "Sibishree",
+    },
+    {
+      name: "Pickle + Peanut Butter",
+      image: "pickel_peanutbutter",
+      ingredients: ["Pickles", "Peanut Butter"],
+      description: "A tangy and nutty delight!",
+      votes: 85,
+      submittedBy: "Sibishree",
+    },
+    {
+      name: "Chocolate + Bacon",
+      image: "Chocolate_Bacon",
+      ingredients: ["Chocolate", "Bacon"],
+      description: "A perfect balance of sweet and savory!",
+      votes: 150,
+      submittedBy: "Sibishree",
+    },
+  ];
+
   return (
     <div className="bg-white min-h-screen">
       {/* Navigation */}
@@ -39,20 +68,25 @@ const LandingPage = () => {
         <p className="text-gray-700 mt-4 max-w-2xl mx-auto px-6 hover:text-purple-500 transition duration-300 animate-multiColor">TasteTwist is a platform where food lovers can share and explore unexpected yet delicious food combinations. Join us to discover new tastes!</p>
       </section>
 
-      {/* Combos Section */}
-      <section className=" py-20 bg-violet-50">
+       {/* Combos Section */}
+      <section className="py-20 bg-violet-50">
         <h2 className="text-4xl font-bold text-center text-gray-800">Popular Unlikely Combos 🍕🍦</h2>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 px-8 mt-8 max-w-5xl mx-auto">
-          {["fries_icecream", "pickel_peanutbutter", "chocolate_bacon"].map((imageName, index) => (
-            <div key={index} className="relative group">
-              <img 
-                src={`/public/images/${imageName}.jpg`} 
-                alt={imageName.replace("_", " + ")} 
+          {foodCombos.map((combo, index) => (
+            <div
+              key={index}
+              className="relative group cursor-pointer"
+              onClick={() => navigate(`/foodcombo/${combo.image}`, { state: { combo } })}
+            >
+              
+              <img
+                src={`/images/${combo.image}.jpg`}
+                alt={combo.name}
                 className="w-full h-48 object-cover rounded-lg shadow-lg"
               />
               <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center opacity-0 group-hover:opacity-100 transition">
-                <span className="text-white text-lg font-semibold">{imageName.replace("_", " + ")}</span>
+                <span className="text-white text-lg font-semibold">{combo.name}</span>
               </div>
             </div>
           ))}
