@@ -218,4 +218,7 @@ create server.js
 - Add the database connection status to the home route (the home page should respond with the database connection status)
 - Commit the changes and Push the branch to github
 
+## Deployment link using Cloudflare for frontend
+## https://taste-6b3.pages.dev/
 
+// "build": "tailwindcss -i ./src/index.css -o ./dist/output.css --minify"

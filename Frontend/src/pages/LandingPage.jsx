@@ -91,6 +91,13 @@ const LandingPage = () => {
             </div>
           ))}
         </div>
+
+        <div className='text-center mt-5 w-70 h-30'>
+          <button className='bg-violet-600 text-white text-2xl rounded-2xl mt-5 text-center px-6 py-3 
+          hover:bg-violet-300 transition hover:text-violet-900 font-semibold'
+          onClick={()=>navigate('/foodcombos')}
+          >Get Started</button>
+        </div>
       </section>
 
  </section>
