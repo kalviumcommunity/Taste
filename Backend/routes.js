@@ -20,7 +20,8 @@ router.get('/combos', async (req, res) => {
     const combos = await FoodCombo.find();
     res.json(combos);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json(
+      { combo:combos,message: error.message });
   }
 });
 
