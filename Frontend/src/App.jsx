@@ -13,6 +13,7 @@ function App() {
         <Route path="/foodcombo/:comboId" element={<FoodComboDummyData />} />
         <Route path="/foodcombos" element={<FoodComboPage />} />
         <Route path="/foodcomboform" element={<FoodComboForm />} />
+        <Route path="/foodcomboform/:id?" element={<FoodComboForm />} />
 
 
       </Routes>
@@ -21,3 +22,5 @@ function App() {
 }
 
 export default App;
+
+
