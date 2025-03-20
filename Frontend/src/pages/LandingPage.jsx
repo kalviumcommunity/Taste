@@ -31,7 +31,8 @@ const LandingPage = () => {
   ];
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen"
+    >
       {/* Navigation */}
       <header>
            <nav className="bg-violet-600 text-white flex justify-center items-center py-6 px-6">
@@ -51,7 +52,8 @@ const LandingPage = () => {
            </nav>
 
         {/* Home Section */}
-        <section id="home" className="bg-violet-100 text-center py-20">
+        <section id="home" className="bg-violet-100 text-center py-20 w-full "
+        style={{ backgroundImage: `url('/public/images/bg.jpg')` }}>
           <h1 className="text-5xl font-extrabold hover:text-purple-500 transition duration-300 animate-multiColor">TasteTwist</h1>
           <h2 className="text-3xl font-bold text-gray-800 mt-4">Weird Combos, Surprisingly Delicious!</h2>
           <p className="text-lg text-gray-700 mt-3">Discover & Share Unexpected Food Pairings That Actually Work!</p>

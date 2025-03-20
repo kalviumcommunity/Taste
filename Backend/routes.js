@@ -60,18 +60,31 @@ router.put('/combos/:id', async (req, res) => {
   }
 });
 
+// router.delete('/combos/:id', async (req, res) => {
+//   try {
+//     const deletedCombo = await FoodCombo.findByIdAndDelete(req.params.id);
+//     //  findByIdAndDelete-> This function looks for the particular document(data) with the given id and delete that document.
+
+//     if (!deletedCombo) {
+//       return res.status(404).json({ message: 'Combo not found' });
+//     }
+//     res.json({ message: 'Combo deleted successfully' });
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// });
+
 router.delete('/combos/:id', async (req, res) => {
   try {
     const deletedCombo = await FoodCombo.findByIdAndDelete(req.params.id);
-    //  findByIdAndDelete-> This function looks for the particular document(data) with the given id and delete that document.
-
     if (!deletedCombo) {
-      return res.status(404).json({ message: 'Combo not found' });
+      return res.status(404).json({ message: "Combo not found" });
     }
-    res.json({ message: 'Combo deleted successfully' });
+    res.json({ message: "Combo deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
+
 
 module.exports = router;
