@@ -1,13 +1,25 @@
 const express = require('express');
 const router = express.Router();
-// The router helps you organize your routes and tells your server what to do when people visit specific URLs(/combos).
 const FoodCombo = require('./model/UserItem'); 
+const { comboValidationSchema } = require("./validation");
+const User = require('./model/Users');
 
-router.post('/combos', async (req, res) => {
+
+const validateRequest = (schema) => (req, res, next) => {
+  const { error } = schema.validate(req.body, { abortEarly: false });
+  if (error) {
+    return res.status(400).json({
+      message: "Validation failed",
+      errors: error.details.map((detail) => detail.message),
+    });
+  }
+  next();
+};
+
+router.post('/combos', validateRequest(comboValidationSchema), async (req, res) => {
   try {
-    const {comboName,ingredients,description,votes,submittedBy}=req.body;
-
-    const newCombo = new FoodCombo({comboName,ingredients,description,votes,submittedBy});
+    const { comboName, ingredients, description, votes, submittedBy } = req.body;
+    const newCombo = new FoodCombo({ comboName, ingredients, description, votes, submittedBy });
     const savedCombo = await newCombo.save();
     res.status(201).json(savedCombo);
   } catch (error) {
@@ -20,15 +32,13 @@ router.get('/combos', async (req, res) => {
     const combos = await FoodCombo.find();
     res.json(combos);
   } catch (error) {
-    res.status(500).json(
-      { combo:combos,message: error.message });
+    res.status(500).json({ message: error.message });
   }
 });
 
 router.get('/combos/:id', async (req, res) => {
   try {
     const combo = await FoodCombo.findById(req.params.id);
-    //  findById-> This function looks for the particular document(data) with the given id and retrieve that document.
     if (!combo) {
       return res.status(404).json({ message: 'Combo not found' });
     }
@@ -38,19 +48,14 @@ router.get('/combos/:id', async (req, res) => {
   }
 });
 
-router.put('/combos/:id', async (req, res) => {
+router.put('/combos/:id', validateRequest(comboValidationSchema), async (req, res) => {
   try {
-    const {comboName,ingredients,description,votes,submittedBy}=req.body;
+    const { comboName, ingredients, description, votes, submittedBy } = req.body;
     const updatedCombo = await FoodCombo.findByIdAndUpdate(
       req.params.id,
-      {comboName,ingredients,description,votes,submittedBy},
+      { comboName, ingredients, description, votes, submittedBy },
       { new: true }
     );
-        //  findByIdAndUpdate-> This function looks for the particular document(data) with the given id and update that document fields.
-        //  req.params.id - gets the id from the url
-        //  {comboName,ingredients,description,votes,submittedBy}, => the fields to update
-        //   new: true: Returns the updated item instead of the old one.
-
     if (!updatedCombo) {
       return res.status(404).json({ message: 'Combo not found' });
     }
@@ -60,31 +65,36 @@ router.put('/combos/:id', async (req, res) => {
   }
 });
 
-// router.delete('/combos/:id', async (req, res) => {
-//   try {
-//     const deletedCombo = await FoodCombo.findByIdAndDelete(req.params.id);
-//     //  findByIdAndDelete-> This function looks for the particular document(data) with the given id and delete that document.
-
-//     if (!deletedCombo) {
-//       return res.status(404).json({ message: 'Combo not found' });
-//     }
-//     res.json({ message: 'Combo deleted successfully' });
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// });
-
 router.delete('/combos/:id', async (req, res) => {
   try {
     const deletedCombo = await FoodCombo.findByIdAndDelete(req.params.id);
     if (!deletedCombo) {
-      return res.status(404).json({ message: "Combo not found" });
+      return res.status(404).json({ message: 'Combo not found' });
     }
-    res.json({ message: "Combo deleted successfully" });
+    res.json({ message: 'Combo deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 });
 
+// Endpoint to get all users for the dropdown menu
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find(); // Get all users
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Endpoint to get food combos created by a particular user
+router.get('/foodCombos/:userId', async (req, res) => {
+  try {
+    const foodCombos = await FoodCombo.find({ created_by: req.params.userId }).populate('created_by');
+    res.json(foodCombos);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;

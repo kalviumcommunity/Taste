@@ -4,9 +4,12 @@ const app = express();
 const port = 3000;
 const { connectDatabase, getDatabaseStatus } = require("./Database");
 const routes = require('./routes'); 
+const authRoutes=require('./routes/auth')
 app.use(express.json());
 app.use(cors());
 app.use(routes);
+app.use('/api/auth', authRoutes);
+
 
 // app.use(routes) => is like saying, "Hey server, whenever a request comes in, check the routes I defined in routes.js to decide what to do!"
 

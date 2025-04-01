@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function FoodComboCard({ _id, comboName, ingredients = [], description, votes, submittedBy, fetchFoodCombos }) {
+function FoodComboCard({ _id, comboName, ingredients = [], description, votes, fetchFoodCombos }) {
   const navigate = useNavigate();
 
   const handleUpdate = () => {
@@ -40,7 +40,6 @@ function FoodComboCard({ _id, comboName, ingredients = [], description, votes, s
 
         <div className="mt-3 flex justify-center gap-4">
           <span className="text-green-600 font-bold">👍 {votes} Likes</span>
-          <span className="text-blue-500 font-medium">{submittedBy}</span>
         </div>
 
         <div className="mt-4 flex justify-center gap-4">

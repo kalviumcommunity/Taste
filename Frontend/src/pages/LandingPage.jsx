@@ -30,6 +30,10 @@ const LandingPage = () => {
     },
   ];
 
+  const handleLogin =()=>{
+    navigate('/login')
+  }
+  
   return (
     <div className="bg-white min-h-screen"
     >
@@ -48,6 +52,12 @@ const LandingPage = () => {
                    <li>
                       <a href="#contact" className="font-bold hover:text-yellow-300">Contact</a>
                    </li>
+
+                   <li onClick={handleLogin}>
+                      <a href="#contact" className="font-bold hover:text-yellow-300">Login/Signup</a>
+                   </li>
+
+                   
                </ul>
            </nav>
 
@@ -114,6 +124,7 @@ const LandingPage = () => {
         </button>
       </section>
    
+
 
       {/* Footer */}
       <footer className="bg-violet-700 text-white text-center py-5">
