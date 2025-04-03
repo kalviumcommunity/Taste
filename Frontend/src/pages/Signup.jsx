@@ -26,11 +26,11 @@ const Signup = () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert(result.message); // User created successfully
-        history.push('/login'); // Redirect to login after successful signup
+        alert(result.message); 
+        navigate('/main');
       } else {
         const result = await response.json();
-        alert(result.message); // Show error message
+        alert(result.message); 
       }
     } catch (error) {
       console.error(error);

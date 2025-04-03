@@ -6,12 +6,13 @@ import FoodComboPage from "./pages/FoodComboPage";
 import FoodComboForm from "./components/FoodComboForm";
 import Signup from "./pages/SignUp";
 import LoginPage from "./pages/LoginPage";
-
+import MainPage from "./pages/MainPage";
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
+        <Route path="/main" element={<MainPage />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/foodcombo/:comboId" element={<FoodComboDummyData />} />
