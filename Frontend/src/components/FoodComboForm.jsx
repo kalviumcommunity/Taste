@@ -1,5 +1,6 @@
 
 
+
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
 // import { useNavigate, useParams } from "react-router-dom";
@@ -8,19 +9,21 @@
 //   const navigate = useNavigate();
 //   const { id } = useParams();
 //   const [isUpdate, setIsUpdate] = useState(false);
-
 //   const [foodData, setFoodData] = useState({
 //     comboName: "",
-//     ingredients: [],
+//     ingredients: "",
 //     description: "",
-//     votes: 0,
+//     submittedBy: "",
 //   });
 
 //   useEffect(() => {
 //     const fetchFoodComboDetails = async () => {
 //       try {
 //         const response = await axios.get(`http://localhost:3000/combos/${id}`);
-//         setFoodData(response.data);
+//         setFoodData({
+//           ...response.data,
+//           ingredients: response.data.ingredients.join(", "),
+//         });
 //       } catch (error) {
 //         console.error("Error fetching food combo details:", error);
 //       }
@@ -36,85 +39,95 @@
 //     setFoodData({ ...foodData, [e.target.name]: e.target.value });
 //   };
 
-//   // const handleIngredientsChange = (e) => {
-//   //   setFoodData({ ...foodData, ingredients: e.target.value.split(",") });
-//   // };
-
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
+//     const formattedIngredients = foodData.ingredients
+//       .split(/,\s*/)
+//       .map((i) => i.trim())
+//       .filter((i) => i);
+
+//     if (formattedIngredients.length < 2) {
+//       alert("Please enter at least two ingredients.");
+//       return;
+//     }
+
 //     try {
 //       if (isUpdate) {
-//         await axios.put(`http://localhost:3000/combos/${id}`, foodData);
+//         await axios.put(`http://localhost:3000/combos/${id}`, {
+//           ...foodData,
+//           ingredients: formattedIngredients,
+//         });
 //         alert("Food Combo updated successfully!");
 //       } else {
-//         await axios.post("http://localhost:3000/combos", foodData);
+//         await axios.post("http://localhost:3000/combos", {
+//           ...foodData,
+//           ingredients: formattedIngredients,
+//         });
 //         alert("Food Combo added successfully!");
 //       }
-//       setTimeout(() => navigate("/foodcombos"), 500); 
-//     } catch (error) {
-//       console.error("Error submitting food combo:", error);
-//     }
-//   };
 
-//   const handleDelete = async () => {
-//     try {
-//       await axios.delete(`http://localhost:3000/combos/${id}`);
-//       alert("Food Combo deleted successfully!");
 //       setTimeout(() => navigate("/foodcombos"), 500);
 //     } catch (error) {
-//       console.error("Error deleting food combo:", error);
+//       console.error("Error submitting food combo:", error);
+//       alert("Failed to submit food combo. Please check your input and try again.");
 //     }
 //   };
 
 //   return (
-//     <div className="bg-gray-100 flex flex-col items-center w-full min-h-screen pt-10">
+//     <div
+//       className="flex flex-col items-center w-full min-h-screen pt-10 bg-cover bg-center"
+//       style={{ backgroundImage: "url('/public/images/update.jpg')" }}
+//     >
 //       <h2 className="text-violet-800 font-bold text-2xl mb-8">
 //         {isUpdate ? "Update Your Food Combo" : "Add Your Weird Food Combo"}
 //       </h2>
-//       <form onSubmit={handleSubmit} className="border-gray-200 border bg-violet-500 shadow-md p-10 w-[400px] rounded-md">
+//       <form
+//         onSubmit={handleSubmit}
+//         className="border-gray-200 border bg-white bg-opacity-90 shadow-md p-10 w-[400px] rounded-md"
+//       >
 //         <label className="block mb-3">
 //           <h2 className="text-gray-900 font-medium">Combo Name</h2>
-//           <input type="text" name="comboName" value={foodData.comboName} onChange={handleChange} required className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md" />
-//         </label>
-
-//         {/* <label className="block mb-3">
-//           <h2 className="text-gray-900 font-medium">Ingredients</h2>
-//           <textarea name="ingredients" value={foodData.ingredients.join(", ")} onChange={handleIngredientsChange} required className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md" />
-//         </label> */}
-
-//         <label className="block mb-3">
-//           <h2 className="text-gray-900 font-medium">Ingredients</h2>
-//           <textarea 
-//             name="ingredients"
-//             value={foodData.ingredients.join(", ")} 
-//             onChange={(e) => 
-//               setFoodData({ ...foodData, ingredients: e.target.value.split(",").map(i => i.trim()).filter(i => i) })
-//             }
-//             required 
+//           <input
+//             type="text"
+//             name="comboName"
+//             value={foodData.comboName}
+//             onChange={handleChange}
+//             required
 //             className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md"
 //           />
 //         </label>
 
+//         <label className="block mb-3">
+//           <h2 className="text-gray-900 font-medium">Ingredients (at least 2)</h2>
+//           <textarea
+//             name="ingredients"
+//             value={foodData.ingredients}
+//             onChange={handleChange}
+//             required
+//             className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md"
+//             placeholder="Enter ingredients separated by commas"
+//           />
+//         </label>
 
 //         <label className="block mb-3">
 //           <h2 className="text-gray-900 font-medium">Description</h2>
-//           <input type="text" name="description" value={foodData.description} onChange={handleChange} required className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md" />
+//           <input
+//             type="text"
+//             name="description"
+//             value={foodData.description}
+//             onChange={handleChange}
+//             required
+//             className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md"
+//           />
 //         </label>
 
-//         {/* <label className="block mb-3">
-//           <h2 className="text-gray-900 font-medium">Submitted By</h2>
-//           <input type="text" name="submittedBy" value={foodData.submittedBy} onChange={handleChange} required className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md" />
-//         </label> */}
-
 //         <div className="flex justify-between">
-//           <button type="submit" className="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-700">
+//           <button
+//             type="submit"
+//             className="bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-700"
+//           >
 //             {isUpdate ? "Update" : "Submit"}
 //           </button>
-//           {isUpdate && (
-//             <button type="button" onClick={handleDelete} className="bg-red-500 text-white font-bold py-2 px-4 rounded-md hover:bg-red-700">
-//               Delete
-//             </button>
-//           )}
 //         </div>
 //       </form>
 //     </div>
@@ -122,6 +135,9 @@
 // }
 
 // export default FoodComboForm;
+
+
+
 
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -136,7 +152,10 @@ function FoodComboForm() {
     ingredients: "",
     description: "",
     submittedBy: "",
+    imageUrl: "",
   });
+
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const fetchFoodComboDetails = async () => {
@@ -161,6 +180,29 @@ function FoodComboForm() {
     setFoodData({ ...foodData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    if (!imageFile) return null;
+
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    try {
+      const response = await axios.post("http://localhost:3000/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      return response.data.imageUrl;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Image upload failed.");
+      return null;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formattedIngredients = foodData.ingredients
@@ -174,17 +216,24 @@ function FoodComboForm() {
     }
 
     try {
+      let uploadedImageUrl = foodData.imageUrl;
+
+      if (imageFile) {
+        uploadedImageUrl = await uploadImage();
+        if (!uploadedImageUrl) return;
+      }
+
+      const requestData = {
+        ...foodData,
+        ingredients: formattedIngredients,
+        imageUrl: uploadedImageUrl,
+      };
+
       if (isUpdate) {
-        await axios.put(`http://localhost:3000/combos/${id}`, {
-          ...foodData,
-          ingredients: formattedIngredients,
-        });
+        await axios.put(`http://localhost:3000/combos/${id}`, requestData);
         alert("Food Combo updated successfully!");
       } else {
-        await axios.post("http://localhost:3000/combos", {
-          ...foodData,
-          ingredients: formattedIngredients,
-        });
+        await axios.post("http://localhost:3000/combos", requestData);
         alert("Food Combo added successfully!");
       }
 
@@ -196,13 +245,16 @@ function FoodComboForm() {
   };
 
   return (
-    <div className="bg-gray-100 flex flex-col items-center w-full min-h-screen pt-10">
+    <div
+      className="flex flex-col items-center w-full min-h-screen pt-10 bg-cover bg-center"
+      style={{ backgroundImage: "url('/public/images/update.jpg')" }}
+    >
       <h2 className="text-violet-800 font-bold text-2xl mb-8">
         {isUpdate ? "Update Your Food Combo" : "Add Your Weird Food Combo"}
       </h2>
       <form
         onSubmit={handleSubmit}
-        className="border-gray-200 border bg-violet-500 shadow-md p-10 w-[400px] rounded-md"
+        className="border-gray-200 border bg-white bg-opacity-90 shadow-md p-10 w-[400px] rounded-md"
       >
         <label className="block mb-3">
           <h2 className="text-gray-900 font-medium">Combo Name</h2>
@@ -240,6 +292,16 @@ function FoodComboForm() {
           />
         </label>
 
+        <label className="block mb-3">
+          <h2 className="text-gray-900 font-medium">Upload Image</h2>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
+            className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md"
+          />
+        </label>
+
         <div className="flex justify-between">
           <button
             type="submit"
@@ -254,4 +316,3 @@ function FoodComboForm() {
 }
 
 export default FoodComboForm;
-

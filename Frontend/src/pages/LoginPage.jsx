@@ -5,7 +5,6 @@ const LoginPage = () => {
     const navigate=useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-//   const history = useHistory();
 
 const handleSignup =()=>{
     navigate('/signup')
@@ -25,11 +24,13 @@ const handleSignup =()=>{
 
       if (response.ok) {
         const result = await response.json();
-        alert(result.message); // Successful login
-        history.push('/dashboard'); // Redirect to dashboard or home page after successful login
+        alert(result.message); 
+        navigate('/main');
+
       } else {
         const result = await response.json();
-        alert(result.message); // Show error message
+        alert(result.message);
+
       }
     } catch (error) {
       console.error(error);

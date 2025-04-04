@@ -13,7 +13,6 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ message: 'Email already in use' });
     }
 
-    // Create a new user
     const newUser = new User({ username, email, password });
     await newUser.save();
     
@@ -24,24 +23,20 @@ router.post('/signup', async (req, res) => {
   }
 });
 
-// Login Route
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    // Check if password is correct
     const isMatch = await user.matchPassword(password);
     if (!isMatch) {
       return res.status(400).json({ message: 'Invalid email or password' });
     }
 
-    // If credentials are correct, respond with success
     res.status(200).json({ message: 'Login successful' });
 
   } catch (error) {
