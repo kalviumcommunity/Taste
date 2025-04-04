@@ -141,7 +141,6 @@ function FoodComboCard({ _id, comboName, ingredients = [], description, votes, f
   const navigate = useNavigate();
   const [localVotes, setLocalVotes] = useState(votes);
 
-  // Function to update votes
   const handleVote = async () => {
     try {
       const response = await axios.put(`http://localhost:3000/combos/${_id}`, {
@@ -202,6 +201,10 @@ function FoodComboCard({ _id, comboName, ingredients = [], description, votes, f
               👍 {localVotes} Likes
             </button>
           </div>
+
+
+
+
 
           <div className="mt-4 flex justify-center gap-4">
             <button onClick={handleUpdate} className="bg-yellow-400 text-violet-700 px-4 py-2 rounded-md hover:bg-yellow-500 hover:text-white">

@@ -1,5 +1,6 @@
 
 
+
 // import React, { useEffect, useState } from "react";
 // import axios from "axios";
 // import { useNavigate, useParams } from "react-router-dom";
@@ -73,17 +74,16 @@
 //   };
 
 //   return (
-//       <div
+//     <div
 //       className="flex flex-col items-center w-full min-h-screen pt-10 bg-cover bg-center"
-//       style={{ backgroundImage: "url('/public/images/.jpg')" }}
+//       style={{ backgroundImage: "url('/public/images/update.jpg')" }}
 //     >
-//     <div className="bg-gray-100 flex flex-col items-center w-full min-h-screen pt-10">
 //       <h2 className="text-violet-800 font-bold text-2xl mb-8">
 //         {isUpdate ? "Update Your Food Combo" : "Add Your Weird Food Combo"}
 //       </h2>
 //       <form
 //         onSubmit={handleSubmit}
-//         className="border-gray-200 border bg-violet-500 shadow-md p-10 w-[400px] rounded-md"
+//         className="border-gray-200 border bg-white bg-opacity-90 shadow-md p-10 w-[400px] rounded-md"
 //       >
 //         <label className="block mb-3">
 //           <h2 className="text-gray-900 font-medium">Combo Name</h2>
@@ -131,11 +131,12 @@
 //         </div>
 //       </form>
 //     </div>
-//   </div>
 //   );
 // }
 
 // export default FoodComboForm;
+
+
 
 
 import React, { useEffect, useState } from "react";
@@ -151,7 +152,10 @@ function FoodComboForm() {
     ingredients: "",
     description: "",
     submittedBy: "",
+    imageUrl: "",
   });
+
+  const [imageFile, setImageFile] = useState(null);
 
   useEffect(() => {
     const fetchFoodComboDetails = async () => {
@@ -176,6 +180,29 @@ function FoodComboForm() {
     setFoodData({ ...foodData, [e.target.name]: e.target.value });
   };
 
+  const handleFileChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    if (!imageFile) return null;
+
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    try {
+      const response = await axios.post("http://localhost:3000/upload", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      return response.data.imageUrl;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      alert("Image upload failed.");
+      return null;
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formattedIngredients = foodData.ingredients
@@ -189,17 +216,24 @@ function FoodComboForm() {
     }
 
     try {
+      let uploadedImageUrl = foodData.imageUrl;
+
+      if (imageFile) {
+        uploadedImageUrl = await uploadImage();
+        if (!uploadedImageUrl) return;
+      }
+
+      const requestData = {
+        ...foodData,
+        ingredients: formattedIngredients,
+        imageUrl: uploadedImageUrl,
+      };
+
       if (isUpdate) {
-        await axios.put(`http://localhost:3000/combos/${id}`, {
-          ...foodData,
-          ingredients: formattedIngredients,
-        });
+        await axios.put(`http://localhost:3000/combos/${id}`, requestData);
         alert("Food Combo updated successfully!");
       } else {
-        await axios.post("http://localhost:3000/combos", {
-          ...foodData,
-          ingredients: formattedIngredients,
-        });
+        await axios.post("http://localhost:3000/combos", requestData);
         alert("Food Combo added successfully!");
       }
 
@@ -254,6 +288,16 @@ function FoodComboForm() {
             value={foodData.description}
             onChange={handleChange}
             required
+            className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md"
+          />
+        </label>
+
+        <label className="block mb-3">
+          <h2 className="text-gray-900 font-medium">Upload Image</h2>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange}
             className="w-full mt-1 p-2 mb-4 bg-gray-50 border border-gray-500 rounded-md"
           />
         </label>
